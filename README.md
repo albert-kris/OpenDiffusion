@@ -21,18 +21,20 @@ OpenDiffusion 是基于 PyTorch 实现的扩散模型框架，为课题组提供
 
 ```
 OpenDiffusion/
-│
-├── diffusion_model.py     # 扩散过程核心（前向加噪、DDPM/DDIM去噪、损失计算）
-├── unet.py                # 2D UNet（含 ResBlock、AttentionBlock、CrossAttention）
-├── unet_1d.py             # 1D UNet（MLP-based，适用于 ViT 特征的扩散/聚类）
-├── unet1d.py              # 1D UNet（Encoder-Decoder 结构，带 skip connection）
-├── nn.py                  # 通用工具（timestep embedding、GroupNorm、EMA 更新等）
-├── fp16_util.py           # FP16 混合精度训练工具
-├── resample.py            # 时间步采样策略（均匀采样、Loss-aware 采样）
-├── uniform.py             # 权重初始化方法集合（Xavier、Kaiming、Orthogonal 等）
-├── logger.py              # 多格式日志系统
-├── __init__.py
-├── LICENSE                # MIT License
+├── zhou_diffusion/            # 核心代码包
+│   ├── __init__.py
+│   ├── diffusion_model.py     # 扩散过程核心（前向加噪、DDPM/DDIM去噪、损失计算）
+│   ├── unet.py                # 2D UNet（含 ResBlock、AttentionBlock、CrossAttention）
+│   ├── unet_1d.py             # 1D UNet（MLP-based，适用于 ViT 特征的扩散/聚类）
+│   ├── unet1d.py              # 1D UNet（Encoder-Decoder 结构，带 skip connection）
+│   ├── nn.py                  # 通用工具（timestep embedding、GroupNorm、EMA 更新等）
+│   ├── fp16_util.py           # FP16 混合精度训练工具
+│   ├── resample.py            # 时间步采样策略（均匀采样、Loss-aware 采样）
+│   ├── uniform.py             # 权重初始化方法集合（Xavier、Kaiming、Orthogonal 等）
+│   ├── logger.py              # 多格式日志系统
+│   └── LICENSE
+├── .gitignore
+├── LICENSE                    # MIT License
 └── README.md
 ```
 
@@ -54,8 +56,8 @@ pip install numpy tqdm einops
 ### 基本使用（2D 图像扩散）
 
 ```python
-from diffusion.unet import UNetModel
-from diffusion.diffusion_model import diffusion
+from zhou_diffusion.unet import UNetModel
+from zhou_diffusion.diffusion_model import diffusion
 
 # 1. 定义 UNet
 model = UNetModel(
@@ -93,8 +95,8 @@ samples = diff.denoise_loop_ddim(
 ### 1D 特征扩散（适用于 ViT 特征 / 聚类任务）
 
 ```python
-from diffusion.unet1d import UNet1D
-from diffusion.diffusion_model import diffusion
+from zhou_diffusion.unet1d import UNet1D
+from zhou_diffusion.diffusion_model import diffusion
 
 model = UNet1D(in_dim=384, embed_dim=384, self_condition=False)
 diff = diffusion(eps_model=model, timesteps=1000, schedule='cosine')
@@ -108,14 +110,14 @@ loss = diff.loss(features, t)
 
 ### `diffusion_model.py` — 扩散过程
 
-| 方法 | 说明 |
-|------|------|
-| `add_noise(x_start, t)` | 前向扩散：对原始数据加噪 |
-| `loss(x, t)` | 计算训练损失（支持一致性训练） |
-| `denoise_loop_ddpm(shape)` | DDPM 采样（完整 T 步） |
-| `denoise_loop_ddim(shape, number)` | DDIM 加速采样 |
-| `cluster(x, model, ...)` | 基于扩散过程的聚类 |
-| `get_z(x, t)` | 提取中间特征表示 |
+| 方法                                 | 说明              |
+| ---------------------------------- | --------------- |
+| `add_noise(x_start, t)`            | 前向扩散：对原始数据加噪    |
+| `loss(x, t)`                       | 计算训练损失（支持一致性训练） |
+| `denoise_loop_ddpm(shape)`         | DDPM 采样（完整 T 步） |
+| `denoise_loop_ddim(shape, number)` | DDIM 加速采样       |
+| `cluster(x, model, ...)`           | 基于扩散过程的聚类       |
+| `get_z(x, t)`                      | 提取中间特征表示        |
 
 ### `unet.py` — 2D UNet
 
