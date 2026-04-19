@@ -8,14 +8,14 @@ OpenDiffusion 是基于 PyTorch 实现的扩散模型框架，为课题组提供
 
 ### 主要特性
 
-- 🔄 **多种噪声调度**：支持 Linear、Cosine、Sigmoid、Sqrt 四种 beta schedule
-- 🎯 **多种预测目标**：支持 `pred_noise`（预测噪声）、`pred_x0`（预测原始数据）、`pred_v`（v-prediction）
-- ⚡ **双采样器**：同时支持 DDPM 和 DDIM 采样，DDIM 可加速推理
-- 🧩 **多架构支持**：内置 2D UNet（含注意力机制 / 交叉注意力）和两种 1D UNet 变体
-- 📉 **Min-SNR 加权**：实现 [Min-SNR loss weighting](https://arxiv.org/abs/2303.09556) 策略
-- 🔁 **自条件机制**：支持 Self-Conditioning 提升生成质量
-- ⚡ **混合精度训练**：内置 FP16 训练工具，节省显存
-- 📊 **灵活日志**：支持 stdout / CSV / JSON / TensorBoard 多种日志格式
+- **多种噪声调度**：支持 Linear、Cosine、Sigmoid、Sqrt 四种 beta schedule
+- **多种预测目标**：支持 `pred_noise`（预测噪声）、`pred_x0`（预测原始数据）、`pred_v`（v-prediction）
+- **双采样器**：同时支持 DDPM 和 DDIM 采样，DDIM 可加速推理
+- **多架构支持**：内置 2D UNet（含注意力机制 / 交叉注意力）和两种 1D UNet 变体
+- **Min-SNR 加权**：实现 [Min-SNR loss weighting](https://arxiv.org/abs/2303.09556) 策略
+- **自条件机制**：支持 Self-Conditioning 提升生成质量
+- **混合精度训练**：内置 FP16 训练工具，节省显存
+- **灵活日志**：支持 stdout / CSV / JSON / TensorBoard 多种日志格式
 
 ## 📁 项目结构
 
@@ -67,7 +67,7 @@ pip install numpy tqdm einops
 pip install -e .
 ```
 
-> ⚠️ **这一步不能跳过！** 执行后才能在任意位置通过 `from zhou_diffusion.xxx import xxx` 导入模块。每人只需运行一次。
+> ⚠️ **这一步不能跳过！** 执行后才能在任意位置通过 `from zhou_diffusion.xxx import xxx` 导入模块。只需运行一次。
 
 ### 验证安装
 
