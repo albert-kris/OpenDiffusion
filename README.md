@@ -1,6 +1,6 @@
 # OpenDiffusion
 
-课题组扩散模型基础代码库 | A foundational diffusion model codebase for research and development.
+周老师课题组扩散模型基础代码库 | A foundational diffusion model codebase for research and development.
 
 ## 📖 简介
 
