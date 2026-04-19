@@ -31,8 +31,8 @@ OpenDiffusion/
 │   ├── fp16_util.py           # FP16 混合精度训练工具
 │   ├── resample.py            # 时间步采样策略（均匀采样、Loss-aware 采样）
 │   ├── uniform.py             # 权重初始化方法集合（Xavier、Kaiming、Orthogonal 等）
-│   ├── logger.py              # 多格式日志系统
-│   └── LICENSE
+│   └── logger.py              # 多格式日志系统
+├── setup.py                   # 安装配置
 ├── .gitignore
 ├── LICENSE                    # MIT License
 └── README.md
@@ -40,22 +40,49 @@ OpenDiffusion/
 
 ## 🚀 快速开始
 
-### 环境配置
+### 1. 克隆仓库
 
 ```bash
 git clone https://github.com/albert-kris/OpenDiffusion.git
 cd OpenDiffusion
+```
 
+### 2. 创建环境
+
+```bash
 conda create -n opendiffusion python=3.10
 conda activate opendiffusion
+```
 
+### 3. 安装依赖
+
+```bash
 pip install torch torchvision torchaudio
 pip install numpy tqdm einops
 ```
 
-### 基本使用（2D 图像扩散）
+### 4. 安装本包（必须）
+
+```bash
+pip install -e .
+```
+
+> ⚠️ **这一步不能跳过！** 执行后才能在任意位置通过 `from zhou_diffusion.xxx import xxx` 导入模块。每人只需运行一次。
+
+### 验证安装
 
 ```python
+from zhou_diffusion.diffusion_model import diffusion
+from zhou_diffusion.unet import UNetModel
+print("安装成功 ✅")
+```
+
+## 📝 使用示例
+
+### 2D 图像扩散
+
+```python
+import torch
 from zhou_diffusion.unet import UNetModel
 from zhou_diffusion.diffusion_model import diffusion
 
@@ -95,6 +122,7 @@ samples = diff.denoise_loop_ddim(
 ### 1D 特征扩散（适用于 ViT 特征 / 聚类任务）
 
 ```python
+import torch
 from zhou_diffusion.unet1d import UNet1D
 from zhou_diffusion.diffusion_model import diffusion
 
@@ -110,14 +138,14 @@ loss = diff.loss(features, t)
 
 ### `diffusion_model.py` — 扩散过程
 
-| 方法                                 | 说明              |
-| ---------------------------------- | --------------- |
-| `add_noise(x_start, t)`            | 前向扩散：对原始数据加噪    |
-| `loss(x, t)`                       | 计算训练损失（支持一致性训练） |
-| `denoise_loop_ddpm(shape)`         | DDPM 采样（完整 T 步） |
-| `denoise_loop_ddim(shape, number)` | DDIM 加速采样       |
-| `cluster(x, model, ...)`           | 基于扩散过程的聚类       |
-| `get_z(x, t)`                      | 提取中间特征表示        |
+| 方法 | 说明 |
+|------|------|
+| `add_noise(x_start, t)` | 前向扩散：对原始数据加噪 |
+| `loss(x, t)` | 计算训练损失（支持一致性训练） |
+| `denoise_loop_ddpm(shape)` | DDPM 采样（完整 T 步） |
+| `denoise_loop_ddim(shape, number)` | DDIM 加速采样 |
+| `cluster(x, model, ...)` | 基于扩散过程的聚类 |
+| `get_z(x, t)` | 提取中间特征表示 |
 
 ### `unet.py` — 2D UNet
 
