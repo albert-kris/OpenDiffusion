@@ -158,15 +158,6 @@ loss = diff.loss(features, t)
 - **`unet_1d.py`**：基于 MLP 的轻量级结构，适用于 ViT 特征的扩散聚类任务
 - **`unet1d.py`**：完整的 Encoder-Decoder 结构（含 skip connection），适用于需要多层次特征的任务
 
-## 📝 开发规范
-
-组内成员在此代码库上开发时，请遵守以下规范：
-
-1. **新功能新建分支** — `git checkout -b feature/你的功能名`
-2. **提交信息规范** — 使用 `feat:` / `fix:` / `docs:` / `refactor:` 前缀
-3. **核心改动写注释** — 算法改动和非直觉实现请写清楚注释
-4. **合并前提 PR** — 保持 `main` 分支稳定可用
-
 ## 📚 参考文献
 
 - Ho et al. [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239) (DDPM), NeurIPS 2020
